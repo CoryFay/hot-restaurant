@@ -46,6 +46,31 @@ app.get("/api/waitlist", function (req, res) {
     return res.json(waitlistCustomers);
 });
 
+if (currentCustomers.length <= 5) {
+    app.post("/api/tables", function (req, res) {
+
+        var newCustomer = req.body;
+
+        console.log(newCustomer);
+
+        currentCustomers.push(newCustomer);
+
+        res.json(newCustomer);
+    });
+} else {
+    app.post("/api/waitlist", function(req, res) {
+
+        var newCustomer = req.body;
+    
+        console.log(newCustomer);
+      
+        waitlistCustomers.push(newCustomer);
+      
+        res.json(newCustomer);
+      });
+}
+
+
 app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
 });
