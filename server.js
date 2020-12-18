@@ -4,6 +4,9 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 const currentCustomers = [
     {
         id: "afhaque89",
@@ -18,11 +21,31 @@ const waitlistCustomers = [
         id: "saimaCool",
         name: "Saima",
         email: "saima@example.com",
-        phone: "000-000-0000" 
+        phone: "000-000-0000"
     }
 ];
 
+// const tables = [
+//     currentCustomers,
+//     waitlistCustomers
+// ];
 
-app.listen(PORT, function() {
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "view.html"));
+});
+
+// app.get("/add", function (req, res) {
+//     res.sendFile(path.join(__dirname, "add.html"));
+// });
+
+app.get("/api/tables", function (req, res) {
+    return res.json(currentCustomers);
+});
+
+app.get("/api/waitlist", function (req, res) {
+    return res.json(waitlistCustomers);
+});
+
+app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
-  });
+});
